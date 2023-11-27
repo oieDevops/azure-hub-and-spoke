@@ -67,11 +67,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_password                  = random_password.admin_password.result
   disable_password_authentication = false
 
-  admin_ssh_key {
-    username   = var.username
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
-
   os_disk {
     name                 = "${local.name}-osdisk1-${random_pet.this.id}"
     caching              = "ReadWrite"
