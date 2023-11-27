@@ -31,11 +31,11 @@ resource "azurerm_key_vault" "vault" {
     ]
 
     secret_permissions = [
-      "Get", "Set", "List",
+      "Get", "Set", "List", "Delete", "Purge", "Recover", "Backup", "Restore",
     ]
-
+    
     storage_permissions = [
-      "Get",
+      "Backup", "Delete", "DeleteSAS", "Get", "GetSAS", "List", "ListSAS", "Purge", "Recover", "RegenerateKey", "Restore", "Set", "SetSAS", "Update",
     ]
   }
 }
