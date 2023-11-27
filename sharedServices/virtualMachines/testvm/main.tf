@@ -58,12 +58,12 @@ resource "azurerm_key_vault_secret" "vm_password" {
 
 # HUB VIRTUAL MACHINE
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                  = local.name
-  location              = azurerm_resource_group.vm_rg.location
-  resource_group_name   = azurerm_resource_group.vm_rg.name
-  network_interface_ids = [azurerm_network_interface.vm_nic.id]
-  size                  = var.vmsize
-  admin_username        = var.username
+  name                            = local.name
+  location                        = azurerm_resource_group.vm_rg.location
+  resource_group_name             = azurerm_resource_group.vm_rg.name
+  network_interface_ids           = [azurerm_network_interface.vm_nic.id]
+  size                            = var.vmsize
+  admin_username                  = var.username
   admin_password                  = random_password.admin_password.result
   disable_password_authentication = false
 
