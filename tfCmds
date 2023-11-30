@@ -1,3 +1,13 @@
+export ARM_CLIENT_ID="66f1da8e-bc9c-4c35-bb5f-eb5d07bd4dd6"
+export ARM_CLIENT_SECRET="FwD8Q~XUb.bRDsvGmfw2OHXvJP6SJihn1LBwEbKT"
+export ARM_TENANT_ID="4972b341-1940-4dfe-b5f0-cb73f8e73a97"
+export ARM_SUBSCRIPTION_ID="b37c0d64-8f4b-4a63-82b6-35e0d770ef32"
+
+unset ARM_CLIENT_ID=
+unset ARM_CLIENT_SECRET=
+unset ARM_TENANT_ID=
+unset ARM_SUBSCRIPTION_ID=
+
 ########### TERRAFORM CLI COMMANDS ###########
 
 terraform fmt && terraform init && terraform validate && terraform workspace list
@@ -34,16 +44,6 @@ terraform {
 
 
 ###########
-
-export ARM_CLIENT_ID="66f1da8e-bc9c-4c35-bb5f-eb5d07bd4dd6"
-export ARM_CLIENT_SECRET="FwD8Q~XUb.bRDsvGmfw2OHXvJP6SJihn1LBwEbKT"
-export ARM_TENANT_ID="4972b341-1940-4dfe-b5f0-cb73f8e73a97"
-export ARM_SUBSCRIPTION_ID="b37c0d64-8f4b-4a63-82b6-35e0d770ef32"
-
-unset ARM_CLIENT_ID=
-unset ARM_CLIENT_SECRET=
-unset ARM_TENANT_ID=
-unset ARM_SUBSCRIPTION_ID=
 
 
 
