@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple IIS Website</title>
+</head>
+<body>
+    <h1>Hello, IIS! This is OIE's page</h1>
+</body>
+</html>
+
+
+Using terraform, 
+1. Create a windows 2022 vm in Azure
+2. Install IIS on the vm
+3. create a simple html page to deploy
+4. Deploy the simple html page on iis
+
+
+##################
+
+# Step 1: Create a Windows 2022 VM in Azure
+# Create a file named main.tf and add the following content:
+
+provider "azurerm" {
+  features = {}
+}
+
+resource "azurerm_resource_group" "example" {
+  name     = "example-resource-group"
+  location = "East US"
+}
+
+resource "azurerm_virtual_network" "example" {
+  name                = "example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+resource "azurerm_subnet" "example" {
+  name                 = "example-subnet"
+  resource_group_name  = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_network_interface" "example" {
+  name                = "example-nic"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.example.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_windows_virtual_machine" "example" {
+  name                  = "example-vm"
+  resource_group_name   = azurerm_resource_group.example.name
+  location              = azurerm_resource_group.example.location
+  size                  = "Standard_D2s_v3"
+  admin_username        = "adminuser"
+  admin_password        = "Password1234!"  # Change this to a secure password
+  network_interface_ids = [azurerm_network_interface.example.id]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-datacenter"
+    version   = "latest"
+  }
+}
+
+# Step 2: Install IIS on the VM
+# You can use a remote-exec provisioner to run PowerShell commands on the VM to install IIS. 
+# Add the following provisioner block to your main.tf file:
+
+provisioner "remote-exec" {
+  inline = [
+    "Install-WindowsFeature -Name Web-Server -IncludeManagementTools"
+  ]
+
+  connection {
+    type     = "winrm"
+    user     = azurerm_windows_virtual_machine.example.admin_username
+    password = azurerm_windows_virtual_machine.example.admin_password
+    host     = azurerm_windows_virtual_machine.example.public_ip_address
+  }
+}
+
+
+# Step 3: Create a Simple HTML Page
+# You can use another remote-exec provisioner to create and copy a simple HTML page to the VM.
+# Add the following block after the previous provisioner:
+
+
+provisioner "remote-exec" {
+  inline = [
+    'Add-Content -Path C:\inetpub\wwwroot\index.html -Value "<html><body><h1>Hello from Terraform!</h1></body></html>"'
+  ]
+
+  connection {
+    type     = "winrm"
+    user     = azurerm_windows_virtual_machine.example.admin_username
+    password = azurerm_windows_virtual_machine.example.admin_password
+    host     = azurerm_windows_virtual_machine.example.public_ip_address
+  }
+}
+
