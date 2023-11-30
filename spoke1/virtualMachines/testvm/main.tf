@@ -1,7 +1,7 @@
 locals {
   name        = "oie-eus-sandbox-test-linux-vm"
   subnet_data = "oie-eus-sandbox"
-  kv_name         = "oie-sandbox-key-vault"
+  kv_name     = "oie-sandbox-key-vault"
   kv_rg       = "oie-sandbox-key-vault"
 }
 

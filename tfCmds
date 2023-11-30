@@ -1,0 +1,85 @@
+########### TERRAFORM CLI COMMANDS ###########
+
+terraform fmt && terraform init && terraform validate && terraform workspace list
+terraform workspace new oie && terraform plan 
+terraform workspace select oie && terraform plan 
+terraform plan 
+terraform apply -auto-approve
+terraform destroy -auto-approve
+
+###########
+
+rm -rf .terraform.lock.hcl .terraform terraform.tfstate terraform.tfstate.d
+
+###########
+
+git branch && git status
+
+git add . && git commit -m "created windows vm" && git push --set-upstream origin develop
+
+git add . && git commit -m "fixed error on vm main file" && git push
+
+git add . && git commit -m "added secret list permision key vault policy" && git push
+
+###########
+
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "tfstate"
+    storage_account_name = "tfstaterqhuw"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
+}
+
+
+###########
+
+export ARM_CLIENT_ID="66f1da8e-bc9c-4c35-bb5f-eb5d07bd4dd6"
+export ARM_CLIENT_SECRET="FwD8Q~XUb.bRDsvGmfw2OHXvJP6SJihn1LBwEbKT"
+export ARM_TENANT_ID="4972b341-1940-4dfe-b5f0-cb73f8e73a97"
+export ARM_SUBSCRIPTION_ID="b37c0d64-8f4b-4a63-82b6-35e0d770ef32"
+
+unset ARM_CLIENT_ID=
+unset ARM_CLIENT_SECRET=
+unset ARM_TENANT_ID=
+unset ARM_SUBSCRIPTION_ID=
+
+
+
+10.0.24.4
+
+nc -v 10.0.24.4 22
+
+nc -v 17.0.0.5 3389
+
+
+az vm list-usage --location "East US" --output table
+
+
+
+netstat -ano
+
+vm = 17.0.0.5
+scaleset vm = 17.0.0.6
+
+sbweb.oie-example.com
+
+tnc 17.0.0.6 -Port 80
+17.0.0.20
+
+Test-Connection -TargetName oie-eus-iis-web -Traceroute
+
+Following best practice, use terraform to implement a hub and spoke in Azure with the following requirements:
+1. A firewall in hub vnet
+2. https Load balancer for webapps in spoke vnet
+2. All traffic from the internet going to the webapp must go must go through the azure firewall in hub vnet
+3. all traffic between spoke must go through az firewall
+
+Describe traffic flow in a hub and spoke network with r
+
+PS C:\Users\oieAdmin> Test-Connection -TargetName oie-eus-iis-web -IPv4
+Test-Connection : A parameter cannot be found that matches parameter name 'TargetName'.
+
+
+Test-NetConnection -ComputerName 17.0.0.6 -Port 80
